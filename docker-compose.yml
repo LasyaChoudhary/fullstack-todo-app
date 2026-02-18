@@ -6,10 +6,10 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/tododb
+      - MONGO_URI=mongodb+srv://Lasyachoudarie:Muralikrishna9@@cluster0.e0ags9u.mongodb.net/?appName=Cluster0
       - WEATHER_KEY="70f0382ace3a1dea537ea74a7f00fcd2"
-    depends_on:
-      - mongo
+    
+    
 
   frontend:
     build: ./client
@@ -18,7 +18,4 @@ services:
     depends_on:
       - backend
 
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
+  
