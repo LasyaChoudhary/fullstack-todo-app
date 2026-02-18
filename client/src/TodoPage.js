@@ -27,7 +27,9 @@ function TodoPage() {
 
   // 🔹 Fetch Todos
   const fetchTodos = async () => {
-    const res = await axios.get("http://localhost:5000/api/todos");
+    const res = await axios.get(
+      "https://todo-backend-zrzi.onrender.com/api/todos"
+    );
     dispatch(setTodos(res.data));
   };
 
@@ -42,7 +44,7 @@ function TodoPage() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/weather/${city}`
+        `https://todo-backend-zrzi.onrender.com/api/weather/${city}`
       );
       setWeather(res.data);
     } catch (error) {
@@ -56,7 +58,7 @@ function TodoPage() {
 
     if (editId) {
       const res = await axios.put(
-        `http://localhost:5000/api/todos/${editId}`,
+        `https://todo-backend-zrzi.onrender.com/api/todos/${editId}`,
         { title }
       );
 
@@ -65,7 +67,7 @@ function TodoPage() {
       setEditId(null);
     } else {
       const res = await axios.post(
-        "http://localhost:5000/api/todos",
+        "https://todo-backend-zrzi.onrender.com/api/todos",
         { title }
       );
 
@@ -78,7 +80,9 @@ function TodoPage() {
 
   // 🔹 Delete Todo
   const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:5000/api/todos/${id}`);
+    await axios.delete(
+      `https://todo-backend-zrzi.onrender.com/api/todos/${id}`
+    );
     dispatch(deleteTodoAction(id));
     showMessage("Task deleted 🗑");
   };
@@ -86,7 +90,7 @@ function TodoPage() {
   // 🔹 Toggle Complete
   const toggleComplete = async (todo) => {
     const res = await axios.put(
-      `http://localhost:5000/api/todos/${todo._id}`,
+      `https://todo-backend-zrzi.onrender.com/api/todos/${todo._id}`,
       { completed: !todo.completed }
     );
 
@@ -264,105 +268,11 @@ function TodoPage() {
           {todos
             .filter((todo) => !todo.completed)
             .map((todo) => (
-              <li
-                key={todo._id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "10px",
-                  marginBottom: "10px",
-                  background: darkMode ? "#3a3a3a" : "#f9f9f9",
-                  borderRadius: "6px",
-                }}
-              >
-                <span
-                  onClick={() => toggleComplete(todo)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {todo.title}
-                </span>
-
-                <div>
-                  <button
-                    onClick={() => startEdit(todo)}
-                    style={{
-                      marginRight: "8px",
-                      background: "#3498db",
-                      border: "none",
-                      color: "white",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => deleteTodo(todo._id)}
-                    style={{
-                      background: "#e74c3c",
-                      border: "none",
-                      color: "white",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
+              <li key={todo._id} style={{ marginBottom: "10px" }}>
+                {todo.title}
               </li>
             ))}
         </ul>
-
-        {completedTodos.length > 0 && (
-          <>
-            <h4 style={{ marginTop: "20px" }}>Completed</h4>
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {completedTodos.map((todo) => (
-                <li
-                  key={todo._id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "10px",
-                    marginBottom: "10px",
-                    background: darkMode ? "#3a3a3a" : "#f1f1f1",
-                    borderRadius: "6px",
-                    opacity: 0.7,
-                  }}
-                >
-                  <span
-                    onClick={() => toggleComplete(todo)}
-                    style={{
-                      textDecoration: "line-through",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {todo.title}
-                  </span>
-
-                  <button
-                    onClick={() => deleteTodo(todo._id)}
-                    style={{
-                      background: "#e74c3c",
-                      border: "none",
-                      color: "white",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
       </div>
     </div>
   );
